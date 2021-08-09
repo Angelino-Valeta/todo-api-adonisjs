@@ -21,7 +21,7 @@ class TodoController {
    * @param {View} ctx.view
    */
   async index ({ request, response }) {
-    const todos = Todos.all()
+    const todos =  await Todos.all()
     return response.status(200).send({
       todos
     })
@@ -48,6 +48,12 @@ class TodoController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
+    const data = request.only(['title', 'description'])
+
+    const todo = await Todos.create(data)
+
+    response.status(201).send(todo)
+
   }
 
   /**
